@@ -24,8 +24,9 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
 
-        // Allow Docker image patch script to gate HTTPS forcing behind env var.
-        URL::forceScheme('https');
+        if (env('FORCE_HTTPS', false)) {
+            URL::forceScheme('https');
+        }
 
         if ($this->app->runningInConsole()) {
             return;

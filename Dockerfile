@@ -39,11 +39,6 @@ COPY patches/AppServiceProvider.php /tmp/AppServiceProvider.php
 RUN cp /tmp/AppServiceProvider.php /var/www/html/app/Providers/AppServiceProvider.php \
  && rm /tmp/AppServiceProvider.php
 
-# Gate any forceScheme('https') behind FORCE_HTTPS
-COPY scripts/force_https_patch.php /tmp/force_https_patch.php
-RUN php /tmp/force_https_patch.php /var/www/html \
- && rm /tmp/force_https_patch.php
-
 # Ensure .env exists BEFORE composer (artisan post-scripts expect it)
 RUN [ -f .env ] || cp .env.example .env
 
